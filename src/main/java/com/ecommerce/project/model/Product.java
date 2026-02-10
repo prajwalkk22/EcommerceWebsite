@@ -15,8 +15,10 @@ public class Product {
     private Long productId;
     private  String productName;
     private String description;
+    private String image;
     private Integer quantity;
     private double price;
+    private double discount;
     private double specialPrice;
 
     @ManyToOne

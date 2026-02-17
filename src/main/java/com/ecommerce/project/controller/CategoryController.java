@@ -3,7 +3,9 @@ package com.ecommerce.project.controller;
 import com.ecommerce.project.config.AppConstants;
 import com.ecommerce.project.payload.CategoryDTO;
 import com.ecommerce.project.payload.CategoryResponse;
+import com.ecommerce.project.payload.ProductDTO;
 import com.ecommerce.project.service.CategoryService;
+import com.ecommerce.project.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,8 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private ProductService productService;
 
     @GetMapping("/api/public/categories")
     private ResponseEntity<CategoryResponse> getAllCategories(
@@ -45,5 +49,13 @@ public class CategoryController {
       return new ResponseEntity<>(savedCategoryDTO,HttpStatus.OK);
 
     }
+
+    @DeleteMapping("/admin/products/{productId}")
+    public ResponseEntity<ProductDTO> deleteProduct(@PathVariable Long productId){
+        ProductDTO deletedProduct = productService.deleteproduct(productId);
+        return new ResponseEntity<>(deletedProduct,HttpStatus.OK);
+    }
+
+
 }
 

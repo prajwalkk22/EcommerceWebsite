@@ -10,29 +10,20 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 @Service
-public class FileServiceImpl implements FileService{
+public class FileServiceImpl implements FileService {
 
     @Override
     public String uploadImage(String path, MultipartFile file) throws IOException {
-        //Filenames of the original file
-        String originalFilename = file.getOriginalFilename();
-        //Generate a unique filename
+        String originalFileName = file.getOriginalFilename();
         String randomId = UUID.randomUUID().toString();
-
-        //mat.jpg -> 1234 -> 1234.jpg
-        String fileName = randomId.concat(originalFilename.substring(originalFilename.lastIndexOf('.')));
-        String filePath = path + File.separator  + fileName;
-
-        //check if path exist and create
+        String fileName = randomId.concat(originalFileName.substring(originalFileName.lastIndexOf('.')));
+        String filePath = path + File.separator + fileName;
 
         File folder = new File(path);
-
-        if(!folder.exists())
+        if (!folder.exists())
             folder.mkdir();
-        //upload to server
 
         Files.copy(file.getInputStream(), Paths.get(filePath));
-        //return filename
         return fileName;
     }
 }
